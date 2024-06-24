@@ -49,7 +49,7 @@ class CagedDownloader:
                 # Ler arquivo de texto e filtrar por UF e município
                 df_month = self._read_txt_file(remote_txt)
                 if 'UF' in df_month.columns and 'Município' in df_month.columns:
-                    df_filtered = df_month[(df_month['uf'] == uf) & (df_month['município'] == muni)]
+                    df_filtered = df_month[(df_month['UF'] == uf) & (df_month['Município'] == muni)]
                     df_all = pd.concat([df_all, df_filtered], ignore_index=True)
 
                 # Remover arquivos temporários
