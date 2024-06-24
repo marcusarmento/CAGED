@@ -41,8 +41,8 @@ class CagedDownloader:
             z.extractall()
 
         df_month = self._read_txt_file(remote_txt)
-        if 'UF' in df_month.columns:
-            df_filtered = df_month[df_month['UF'] == uf]
+        if 'uf' in df_month.columns:
+            df_filtered = df_month[df_month['uf'] == uf]
             df_all = pd.concat([df_all, df_filtered], ignore_index=True)
 
         os.remove(remote_archive)
@@ -50,17 +50,12 @@ class CagedDownloader:
         print(f"Mês {month} do ano {year} baixado com sucesso.")
 
         if level == 'Subclasse':
-            return df_all[df_all['CNAE 2.0 Subclasse'] != '']
-        elif level == 'Classe':
-            return df_all[df_all['CNAE 2.0 Classe'] != '']
+            return df_all[df_all['subclasse'] != '']
         elif level == 'Seção':
-            return df_all[df_all['CNAE 2.0 Seção'] != '']
+            return df_all[df_all['seção'] != '']
 
     def SubclasseMunicipios(self, year, month, uf):
         return self._download_and_filter_data(year, month, uf, 'Subclasse')
-
-    def ClasseMunicipios(self, year, month, uf):
-        return self._download_and_filter_data(year, month, uf, 'Classe')
 
     def SecaoMunicipios(self, year, month, uf):
         return self._download_and_filter_data(year, month, uf, 'Seção')
