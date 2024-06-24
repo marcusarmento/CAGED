@@ -11,7 +11,6 @@ setup(
     description='Um pacote Python para baixar dados do CAGED.',
     install_requires=[
         'pandas',
-        'py7zr',
-        'ftplib'
+        'py7zr'
     ],
 )
