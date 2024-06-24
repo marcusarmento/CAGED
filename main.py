@@ -1,3 +1,4 @@
+import pandas as pd
 from caged_downloader import CagedDownloader
 
 def main():
@@ -5,25 +6,24 @@ def main():
     caged_downloader.install_dependencies()  # Instalar dependências
     caged_downloader.connect()
 
-    # Especificar os anos e meses desejados
-    years = ['2023', '2024']
-    months = ['01', '02', '03']
+    # Especificar a UF desejada (por exemplo, Alagoas: 27)
+    uf = 27
 
-    # Filtrar dados para Alagoas (UF: AL) e Maceió (Código IBGE: 2704302)
-    uf = 'AL'
-    muni = '2704302'
+    # Definir a tabela final
+    CAGEDMun = pd.DataFrame()
 
-    # Baixar e filtrar os dados do CAGED
-    df_caged = caged_downloader.download_and_read_caged_data(years, months, uf, muni)
+    # Iterar pelos anos e meses
+    for year in range(2015, 2024):
+        for month in range(1, 13):
+            month_str = f'{month:02}'
+            data = caged_downloader.SecaoMunicipios(year, month_str, uf)
+            CAGEDMun = CAGEDMun.append(data, ignore_index=True)
 
     caged_downloader.ftp.quit()  # Desconectar do servidor FTP
 
-    # Exibir as primeiras linhas do DataFrame
-    print(df_caged.head())
-
     # Salvar os dados em um arquivo CSV
-    df_caged.to_csv('dados_caged.csv', index=False)
-    print("Dados salvos com sucesso em 'dados_caged.csv'.")
+    CAGEDMun.to_csv('CAGEDMun.csv', encoding='iso-8859-1', index=False)
+    print("Dados salvos com sucesso em 'CAGEDMun.csv'.")
 
 if __name__ == "__main__":
     main()
