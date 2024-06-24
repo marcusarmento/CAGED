@@ -1,0 +1,9 @@
+# Arquivos de ambiente virtual Python
+env/
+
+# Arquivos de cache e logs
+*.log
+*.csv
+
+# Arquivos de configuração local
+.env
